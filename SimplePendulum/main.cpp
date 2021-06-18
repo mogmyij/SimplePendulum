@@ -2,7 +2,74 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <glfw3.h>
+#include <fstream>
+#include <sstream>
+#include "pendulum.h"
 
+static unsigned int compileShader(unsigned int type, std::string shaderSource) {
+	unsigned int shader = glCreateShader(type);
+	const char* source = &shaderSource[0];
+	glShaderSource(shader, 1, &source, NULL);
+	glCompileShader(shader);
+
+	int compileStatus;
+	glGetShaderiv(shader, GL_COMPILE_STATUS, &compileStatus);
+	if (compileStatus == GL_FALSE)
+	{
+		int len;
+		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &len);
+		char* errorLog = (char *)alloca((len) * sizeof(char));
+		glGetShaderInfoLog(shader, len * sizeof(char), &len, errorLog);
+
+		std::cout << "fail to compile " << (type == GL_VERTEX_SHADER ? "vertex " : "fragment: ") << std::endl;
+		std::cout << errorLog << std::endl;
+
+		glDeleteShader(shader);
+		return 0;
+	}
+
+	return shader;
+}
+
+static unsigned int createShader(std::string vertexSource, std::string fragmentSource) {
+	unsigned int program = glCreateProgram();
+
+	unsigned int vertexShader = compileShader(GL_VERTEX_SHADER, vertexSource);
+	unsigned int fragmentShader = compileShader(GL_FRAGMENT_SHADER, fragmentSource);
+
+	if ((vertexShader || fragmentShader) == 0)
+	{
+		glDeleteProgram(program);
+		return 0;
+	}
+
+	glAttachShader(program, vertexShader);
+	glAttachShader(program, fragmentShader);
+	glLinkProgram(program);
+
+	glValidateProgram(program);
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
+	return program;
+}
+
+static void readSourceFile(std::string filePath, std::string * source) {
+	std::ifstream file;
+	file.open(filePath, std::fstream::in);
+	std::string line;
+	std::string shaderSource;
+
+	std::stringstream ss;
+	while (!file.eof())
+	{
+		std::getline(file, line);
+		ss << line;
+		ss << std::endl;
+	}
+	shaderSource = ss.str();
+	*source = shaderSource;
+	return;
+}
 
 int main(void)
 {
@@ -12,6 +79,7 @@ int main(void)
 	if (!glfwInit())
 		return -1;
 
+	//use the core profile of openGL
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -34,6 +102,11 @@ int main(void)
 	}
 
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+
+	//create line vao
+	//create circle vao
+
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
