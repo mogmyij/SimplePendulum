@@ -104,7 +104,6 @@ int main(void)
 
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-	Pendulum test = Pendulum(0.0, 0.3, 0.0, 0.0);
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
