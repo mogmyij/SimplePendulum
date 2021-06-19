@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include "pendulum.h"
+#include "macros.h"
 
 static unsigned int compileShader(unsigned int type, std::string shaderSource) {
 	unsigned int shader = glCreateShader(type);
@@ -103,9 +104,7 @@ int main(void)
 
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-
-	//create line vao
-	//create circle vao
+	Pendulum test = Pendulum(0.0, 0.3, 0.0, 0.0);
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
