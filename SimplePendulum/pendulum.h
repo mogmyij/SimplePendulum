@@ -8,22 +8,26 @@ private:
 	float angularVelocity;
 	float originX;
 	float originY;
+
 	struct pendulumLine
 	{
 		unsigned int vao;
+		unsigned int vbo;
 	};
 	pendulumLine line;
+
 	struct pendulumBall
 	{
 		unsigned int vao;
+		unsigned int vbo;
 	};
 	pendulumBall ball;
 
 public:
 	Pendulum(float t,float r,float ox,float oy);
-	void update(float time, float g);
+	void updatePendulum(float time, float g);
 	void draw();
-	int updateGL();
+	void updateGL();
 	float getTheta();
 	float getRadius();
 	float getAngularVelocity();

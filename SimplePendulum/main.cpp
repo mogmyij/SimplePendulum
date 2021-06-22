@@ -1,31 +1,33 @@
 #define GLEW_STATIC
+#define _USE_MATH_DEFINES
 #include <iostream>
 #include <GL/glew.h>
 #include <glfw3.h>
 #include <fstream>
 #include <sstream>
+
 #include "pendulum.h"
 #include "macros.h"
 
 static unsigned int compileShader(unsigned int type, std::string shaderSource) {
-	unsigned int shader = glCreateShader(type);
+	GLCall(unsigned int shader = glCreateShader(type));
 	const char* source = &shaderSource[0];
-	glShaderSource(shader, 1, &source, NULL);
-	glCompileShader(shader);
+	GLCall(glShaderSource(shader, 1, &source, NULL));
+	GLCall(glCompileShader(shader));
 
 	int compileStatus;
-	glGetShaderiv(shader, GL_COMPILE_STATUS, &compileStatus);
+	GLCall(glGetShaderiv(shader, GL_COMPILE_STATUS, &compileStatus));
 	if (compileStatus == GL_FALSE)
 	{
 		int len;
-		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &len);
+		GLCall(glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &len));
 		char* errorLog = (char *)alloca((len) * sizeof(char));
-		glGetShaderInfoLog(shader, len * sizeof(char), &len, errorLog);
+		GLCall(glGetShaderInfoLog(shader, len * sizeof(char), &len, errorLog));
 
 		std::cout << "fail to compile " << (type == GL_VERTEX_SHADER ? "vertex " : "fragment: ") << std::endl;
 		std::cout << errorLog << std::endl;
 
-		glDeleteShader(shader);
+		GLCall(glDeleteShader(shader));
 		return 0;
 	}
 
@@ -33,24 +35,24 @@ static unsigned int compileShader(unsigned int type, std::string shaderSource) {
 }
 
 static unsigned int createShader(std::string vertexSource, std::string fragmentSource) {
-	unsigned int program = glCreateProgram();
+	GLCall(unsigned int program = glCreateProgram());
 
 	unsigned int vertexShader = compileShader(GL_VERTEX_SHADER, vertexSource);
 	unsigned int fragmentShader = compileShader(GL_FRAGMENT_SHADER, fragmentSource);
 
 	if ((vertexShader || fragmentShader) == 0)
 	{
-		glDeleteProgram(program);
+		GLCall(glDeleteProgram(program));
 		return 0;
 	}
 
-	glAttachShader(program, vertexShader);
-	glAttachShader(program, fragmentShader);
-	glLinkProgram(program);
+	GLCall(glAttachShader(program, vertexShader));
+	GLCall(glAttachShader(program, fragmentShader));
+	GLCall(glLinkProgram(program));
 
-	glValidateProgram(program);
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
+	GLCall(glValidateProgram(program));
+	GLCall(glDeleteShader(vertexShader));
+	GLCall(glDeleteShader(fragmentShader));
 	return program;
 }
 
@@ -104,14 +106,28 @@ int main(void)
 
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
+	Pendulum test = Pendulum(DEG_TO_RAD(20.0f), CENTIMETER(50.0f), 0.0, 0.0);
+
+	//use shader
+	std::string vertexSource;
+	std::string fragmentSource;
+
+	readSourceFile("../res/VertexShader.shader", &vertexSource);
+	readSourceFile("../res/FragmentShader.Shader", &fragmentSource);
+
+	unsigned int shader = createShader(vertexSource, fragmentSource);
+	GLCall(glUseProgram(shader));
+
+
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT);
-
+		test.draw();
 		/* Swap front and back buffers */
+
 		glfwSwapBuffers(window);
 
 		/* Poll for and process events */
