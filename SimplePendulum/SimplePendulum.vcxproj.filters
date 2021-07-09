@@ -18,18 +18,18 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pendulum.cpp">
+    <ClCompile Include="macros.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="macros.cpp">
+    <ClCompile Include="PendulumModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pendulum.h">
+    <ClInclude Include="macros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="macros.h">
+    <ClInclude Include="PendulumModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

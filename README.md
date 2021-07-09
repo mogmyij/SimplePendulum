@@ -10,3 +10,5 @@ g is the gravitational constant
 r is the radius
 and θ is the angle measured from the resting position of the pendulum
 
+https://gafferongames.com/post/fix_your_timestep/
+https://gafferongames.com/post/integration_basics/

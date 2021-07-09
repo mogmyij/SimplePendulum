@@ -6,7 +6,7 @@
 #include <fstream>
 #include <sstream>
 
-#include "pendulum.h"
+#include "PendulumModel.h"
 #include "macros.h"
 
 static unsigned int compileShader(unsigned int type, std::string shaderSource) {
@@ -106,7 +106,7 @@ int main(void)
 
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-	Pendulum test = Pendulum(DEG_TO_RAD(20.0f), CENTIMETER(50.0f), 0.0, 0.0);
+	PendulumModel test = PendulumModel();
 
 	//use shader
 	std::string vertexSource;
