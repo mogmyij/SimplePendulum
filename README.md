@@ -1,6 +1,6 @@
 ﻿# Simple Pendulum simulation using OpenGL and C++
 
-![gif preview](https://gfycat.com/idlelongeft)
+![gif preview](./pendulumWave.gif)
 [Video Demo](https://youtu.be/mW9hMDeniRc)
 
 A simple pendulum consists of a rod and a mass. The mass is connected to the rod which swings freely about its pivot.
