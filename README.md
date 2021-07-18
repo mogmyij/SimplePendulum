@@ -1,6 +1,6 @@
 ﻿# Simple Pendulum simulation using OpenGL and C++
 
-![gif preview](./pendulumWave.gif)
+![gif preview](./pendulumWave.gif)  
 [Video Demo](https://youtu.be/mW9hMDeniRc)
 
 A simple pendulum consists of a rod and a mass. The mass is connected to the rod which swings freely about its pivot.
@@ -32,7 +32,7 @@ Advantages
 Disadvantages
 * Not as accurate as other methods such as implicit Euler. It is first-order accurate. (same as explicit Euler)
 
-**However** for our purposes, semi-implicit Euler is sufficiently accurate.
+**However** for our purposes, semi-implicit Euler is sufficiently accurate.  
 [Reference](https://gafferongames.com/post/integration_basics/)
 
 ## The time step of the simulation is not linked to frame rate
@@ -50,5 +50,5 @@ These two methods are flawed and can be easily solved by unlinking the physics t
 * For each frame, add the time taken to the accumulation variable.
 * When the time within the accumulation variable exceeds the physics time step, simulate the physics of the object.
 This separates the frame rate from the physics time step by not simulating the object's motion each frame but rather when the time elapsed is greater than the time step.
-This results in an accurate and deterministic simulation(When the input is the same the output will be the same).
+This results in an accurate and deterministic simulation(When the input is the same the output will be the same).  
 [Reference](https://gafferongames.com/post/fix_your_timestep/)
