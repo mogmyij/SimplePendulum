@@ -5,6 +5,7 @@
 #include <glfw3.h>
 #include <fstream>
 #include <sstream>
+#include <chrono>
 
 #include "PendulumModel.h"
 #include "macros.h"
@@ -118,13 +119,44 @@ int main(void)
 	unsigned int shader = createShader(vertexSource, fragmentSource);
 	GLCall(glUseProgram(shader));
 
+	test.addPendulumObject(DEG_TO_RAD(20), 1.0, 0.0, 0.5);
+	test.addPendulumObject(DEG_TO_RAD(20), 0.957, 0.0, 0.5);
+	test.addPendulumObject(DEG_TO_RAD(20), 0.916, 0.0, 0.5);
+	test.addPendulumObject(DEG_TO_RAD(20), 0.879, 0.0, 0.5);
+	test.addPendulumObject(DEG_TO_RAD(20), 0.843, 0.0, 0.5);
+	test.addPendulumObject(DEG_TO_RAD(20), 0.809, 0.0, 0.5);
+	test.addPendulumObject(DEG_TO_RAD(20), 0.778, 0.0, 0.5);
+	test.addPendulumObject(DEG_TO_RAD(20), 0.748, 0.0, 0.5);
+	test.addPendulumObject(DEG_TO_RAD(20), 0.720, 0.0, 0.5);
+	test.addPendulumObject(DEG_TO_RAD(20), 0.694, 0.0, 0.5);
+	test.addPendulumObject(DEG_TO_RAD(20), 0.669, 0.0, 0.5);
+	test.addPendulumObject(DEG_TO_RAD(20), 0.645, 0.0, 0.5);
+	
+	//init chrono values
+	double dt = 0.001;
 
+	std::chrono::high_resolution_clock::time_point timeNow = std::chrono::high_resolution_clock::now();
+	std::chrono::high_resolution_clock::time_point newTime;
+	double accumulator = 0.0;
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
+		newTime = std::chrono::high_resolution_clock::now();
+		double frameTime = std::chrono::duration<double>(newTime - timeNow).count();
+		timeNow = newTime;
+
+		accumulator += frameTime;
+
+		while (accumulator>dt)
+		{
+			test.updatePendulumObjects(dt, 9.81);
+			accumulator -= dt;
+		}
+
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT);
+		test.genTransformationMatrix();
 		test.draw();
 		/* Swap front and back buffers */
 

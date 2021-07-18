@@ -1,7 +1,7 @@
 #pragma once
 #include <GL/glew.h>
 
-//convertion from GL units to meter/centimeter
+//convertion from meter/centimeter to gl units
 #define METER(x) x/2
 #define CENTIMETER(x) x/200
 
@@ -10,7 +10,7 @@
 
 //settings for the ball
 #define NUMBER_OF_TRIANGLES_IN_CIRCLE 300
-#define RADIUS_OF_BALL CENTIMETER(5.0)
+#define RADIUS_OF_BALL CENTIMETER(3.0)
 
 //error logging
 #define ASSERT(x) if ((x)) __debugbreak();
