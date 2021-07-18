@@ -1,4 +1,4 @@
-﻿#Simple Pendulum simulation using opengl and C++
+﻿# Simple Pendulum simulation using opengl and C++
 
 [Video Demo]()
 
@@ -18,7 +18,7 @@ https://gafferongames.com/post/fix_your_timestep/
 https://gafferongames.com/post/integration_basics/
 
 
-#this simulation makes use of semi-implicit euler
+## this simulation makes use of semi-implicit euler
 Semi-implicit euler is a [Numerical Integration](https://en.wikipedia.org/wiki/Numerical_integration) method used to aproximate the solution of the pendulum's equation of motion.
 
 
@@ -35,5 +35,5 @@ Disadvantages
 
 **However** for our purposes, semi-implicit Euler is sufficently accurate.
 
-#the time step in the simulation is also not linked to frame rate
+## the time step in the simulation is also not linked to frame rate
 the time step used in physics calculations will affect the simulation's behavior and accuracy.
